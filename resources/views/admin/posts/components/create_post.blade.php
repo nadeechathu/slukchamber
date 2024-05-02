@@ -1,0 +1,169 @@
+@extends('admin.layouts.app')
+
+@section('content')
+<section>
+
+
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-12">
+                    <!-- jquery validation -->
+                    <div class="card card-primary mt-3">
+                        <div class="card-header content-header">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h3 class="card-title">Create Post <small></small></h3>
+                                </div>
+                                <div class="col-sm-6 text-white">
+                                    <ol class="breadcrumb float-sm-right">
+                                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                        <li class="breadcrumb-item">Create Post</li>
+                                    </ol>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @include('admin.common.alerts')
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form id="quickForm" action="{{ route('admin.posts.create') }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <div class="card-body">
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="title">Title</label>
+                                            <input type="text" name="title" class="form-control" id="title" placeholder="Title" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="slug">Slug</label>
+                                            <input type="text" name="slug" class="form-control" id="slug" placeholder="Slug" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">Tags Input</label>
+                                            <div class="form-group custom-tag">
+                                                <input type="text" id="inputTag" class="form-control" name="tags" data-role="tagsinput">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="published-date">Published Date / Event Date</label>
+                                            <input type="date" name="published_date" class="form-control" id="published-date" placeholder="Published Date" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="category">Category</label> <span class="is-available badge " style=" display: none;background-color:#e7616a"> This category is already selected.</span>
+                                            <select name="category" class="form-control" id="category" name="selectedOptions[]">
+                                                <option style="display:none">---Select and option----</option>
+                                                @foreach ($categories as $categoryId => $categoryName)
+                                                <option value="{{ $categoryId }}">{{ $categoryName }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div id="selected-categories" style="display: flex;">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="status">Status</label>
+                                            <select name="status" class="form-control" id="status">
+                                                @foreach($statuses as $status)
+                                                    <option value="{{$status->value}}">{{$status->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="short-description">Short Description</label>
+                                    <textarea name="short_description" class="form-control" id="short-description" cols="30" placeholder="Short Description" rows="4" required></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <textarea name="description" class="form-control" id="description" cols="30" placeholder="Description" rows="4" required></textarea>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="banner-image">Banner Image</label>
+                                    <input type="file" name="banner_image" class="form-control" id="banner-image" placeholder="Published Date" required>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="time">Time</label>
+                                        <input type="time" name="time" class="form-control" id="time" placeholder="Time">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="location">Location</label>
+                                    <input type="text" name="location" class="form-control" id="location" placeholder="Location">
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="is_featured">Featured</label>
+                                        <select name="is_featured" class="form-control" id="is_featured">
+                                                <option value="0">NO</option>
+                                                <option value="1">YES</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Create</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!--/.col (left) -->
+                <!-- right column -->
+                <div class="col-md-6">
+
+                </div>
+                <!--/.col (right) -->
+            </div>
+
+        </div>
+    </section>
+
+</section>
+
+@endsection
+
+@section('scripts')
+    <script>
+        $( document ).ready(function() {
+            $("#inputTag").tagsinput('items');
+        });
+    </script>
+@endsection
